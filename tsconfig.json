@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es2017"],
+    "alwaysStrict": true,
+    "moduleResolution": "node",
+    "outDir": "dist/"
+  },
+  "exclude": ["node_modules"]
+}
