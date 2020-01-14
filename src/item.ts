@@ -1,5 +1,5 @@
 
-import uuid4 from 'uuid4';
+import * as uuid4 from 'uuid4';
 const now = new Date();
 
 export default class Item {
@@ -19,7 +19,7 @@ export default class Item {
     this._updated = options._updated || now.getTime();
     this._description = options._description;
     this._starred = options._starred || false;
-    this._boards = options._boards || [];
+    this._boards = options._boards || ['general'];
   }
 
   get id(): string { return this._id; }
@@ -30,16 +30,16 @@ export default class Item {
   get starred(): boolean { return this._starred; }
   get boards(): Array<string> { return this._boards; }
 
-  set displayId(newId: number) {
-    if (typeof newId !== 'number') throw new Error('new display id must be a number');
-    if (newId <= 0) throw new Error('new display id equal to or less than 0');
-    this._displayId = newId;
+  set displayId(value: number) {
+    if (typeof value !== 'number') throw new Error('new display id must be a number');
+    if (value <= 0) throw new Error('new display id equal to or less than 0');
+    this._displayId = value;
     this._updated = new Date().getTime()
   }
-  set description(newDesc: string) {
-    if (typeof newDesc !== 'string') throw new Error('new description must be a string');
-    if (newDesc.length > 160) throw new Error('new description cant be longer than 160 characters');
-    this._description = newDesc;
+  set description(value: string) {
+    if (typeof value !== 'string') throw new Error('new description must be a string');
+    if (value.length > 160) throw new Error('new description cant be longer than 160 characters');
+    this._description = value;
     this._updated = new Date().getTime()
   }
   set starred(value: boolean) {
@@ -47,11 +47,11 @@ export default class Item {
     this._starred = value;
     this._updated = new Date().getTime()
   }
-  set boards(boards: Array<string>) {
-    boards.forEach(board => {
-      if (typeof board !== 'string') throw new Error('board must be a string identifier');
+  set boards(values: Array<string>) {
+    values.forEach(value => {
+      if (typeof value !== 'string') throw new Error('board must be a string identifier');
     });
-    this._boards = boards;
+    this._boards = values;
     this._updated = new Date().getTime()
   }
 
@@ -59,10 +59,6 @@ export default class Item {
     if (typeof board !== 'string') throw new Error('board must be a string identifier');
     this._boards.push(board);
     this._updated = new Date().getTime()
-  }
-
-  toJSON(): object {
-    return new Map(Object.entries(this));
   }
 
 };

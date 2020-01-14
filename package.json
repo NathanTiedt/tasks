@@ -3,15 +3,24 @@
   "version": "0.0.1",
   "description": "Command line task interface",
   "main": "index.js",
+  "bin": {
+    "tasks": "./cli.js"
+  },
   "scripts": {
+    "setup": "npm install; tsc; npm link",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nate Tiedt <nate.tiedt@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "commander": "^4.1.0",
+    "inquirer": "^7.0.3",
+    "inquirer-search-checkbox": "^1.0.0",
     "uuid4": "^1.1.4"
   },
   "devDependencies": {
+    "@types/node": "^13.1.6",
+    "ts-node": "^8.6.2",
     "typescript": "^3.7.4"
   }
 }
