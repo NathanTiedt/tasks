@@ -1,6 +1,8 @@
 
 import * as inquirer from 'inquirer';
 
+import { inverse, grey, underline } from 'chalk';
+
 import Item from './item';
 import Task from './task';
 
@@ -8,6 +10,7 @@ export interface Choice {
   name: string;
   value: string;
   checked: boolean;
+  disabled?: boolean;
   short?: string;
 };
 
@@ -22,10 +25,12 @@ class Render {
   }
 
   private _buildChoice(item: Task): Choice {
+    const displayId = item.displayId.toString().padStart(3, ' ');
     return {
-      name: item.description,
+      name: `${displayId}| ${item.description}`,
       value: item.id,
       checked: item.isComplete,
+      short: item.displayId.toString(),
     }
   }
 
@@ -33,7 +38,7 @@ class Render {
     const choices: (Choice | inquirer.Separator)[] = [];
     const boards = this._buildBoardSet(items);
     boards.forEach( (board) => {
-      choices.push(new inquirer.Separator(`== ${board} ==`));
+      choices.push(new inquirer.Separator(underline.grey(`\n\t${board}\t`)));
       let choiceSet = items.filter(item => item.boards.includes(board))
           .map( (item) => this._buildChoice(item) );
       choices.push(...choiceSet);
@@ -47,11 +52,13 @@ class Render {
       name: name,
       message: message,
       choices: this._buildChoiceSet(items),
+      prefix: '**',
+      suffix: '? ',
     };
   }
 
   async displayByBoard(name: string, items: Task[]) {
-    const questions = [this._buildQuestion(name, 'Current Live Tasks', items)];
+    const questions = [this._buildQuestion(name, 'Tasks Completed', items)];
     const answers = await inquirer.prompt(questions);
     return answers;
   }

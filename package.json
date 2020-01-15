@@ -13,6 +13,7 @@
   "author": "Nate Tiedt <nate.tiedt@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^3.0.0",
     "commander": "^4.1.0",
     "inquirer": "^7.0.3",
     "inquirer-search-checkbox": "^1.0.0",

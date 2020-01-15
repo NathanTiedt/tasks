@@ -30,11 +30,22 @@ class Tasks {
         .map( (obj) => new Task(obj));
   }
 
-  createTask(input) {
+  private _generateId(data: any[] = this._tasks): number {
+    const ids = data.map(item => item.displayId);
+    const max = (ids.length === 0) ? 0 : Math.max(...ids);
+    return max + 1;
+  }
+
+  private _normalizeTask(input): Task {
     input._boards = input.boards;
-    input._description = input.description;
     if (input._boards.length === 0) input._boards = ['general']
-    const task = new Task(input);
+    input._description = input.description;
+    input._displayId = this._generateId();
+    return new Task(input);
+  }
+
+  createTask(input) {
+    const task = this._normalizeTask(input);
     const tasks = this._tasks;
     tasks.push(task);
     this._storage.save(tasks);

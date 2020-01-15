@@ -5,6 +5,7 @@ const Tasks = require('./dist/tasks').default;
 
 function parseBoards(extras) {
   return extras.filter(extra => extra.startsWith("@"))
+      .map((board) => board.replace('@', ''));
 }
 
 function parseDescription(extras) {
