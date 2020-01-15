@@ -1,7 +1,7 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
-const program = require('commander');
-const Tasks = require('./dist/tasks').default;
+import * as program from 'commander';
+import Tasks from './src/tasks';
 
 function parseBoards(extras) {
   return extras.filter(extra => extra.startsWith("@"))

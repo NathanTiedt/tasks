@@ -4,7 +4,7 @@
   "description": "Command line task interface",
   "main": "index.js",
   "bin": {
-    "tasks": "./cli.js"
+    "tasks": "./cli.ts"
   },
   "scripts": {
     "setup": "npm install; tsc; npm link",
