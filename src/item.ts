@@ -14,12 +14,12 @@ export default class Item {
 
   constructor(options: any = {}) {
     this._id = options._id || uuid4();
-    this._displayId = options._displayId;
+    this._displayId = options._displayId || options.displayId;
     this._created = options._created || now.getTime();
     this._updated = options._updated || now.getTime();
-    this._description = options._description;
-    this._starred = options._starred || false;
-    this._boards = options._boards || ['general'];
+    this._description = options._description || options.description;
+    this._starred = options._starred || options.star || false;
+    this._boards = options._boards || options.boards || ['general'];
   }
 
   get id(): string { return this._id; }

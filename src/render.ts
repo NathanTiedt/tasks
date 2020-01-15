@@ -1,7 +1,7 @@
 
 import * as inquirer from 'inquirer';
 
-import { inverse, grey, underline } from 'chalk';
+import { green, grey, red, underline } from 'chalk';
 
 import Item from './item';
 import Task from './task';
@@ -26,8 +26,13 @@ class Render {
 
   private _buildChoice(item: Task): Choice {
     const displayId = item.displayId.toString().padStart(3, ' ');
+    let name = `${displayId}|`
+    name += item.starred ? `* ` : `  `;
+    name += `${item.description}`;
+    if (item.priority == 1) name = green(name);
+    if (item.priority == 3) name = red(name);
     return {
-      name: `${displayId}| ${item.description}`,
+      name: name,
       value: item.id,
       checked: item.isComplete,
       short: item.displayId.toString(),
@@ -38,7 +43,7 @@ class Render {
     const choices: (Choice | inquirer.Separator)[] = [];
     const boards = this._buildBoardSet(items);
     boards.forEach( (board) => {
-      choices.push(new inquirer.Separator(underline.grey(`\n\t${board}\t`)));
+      choices.push(new inquirer.Separator(`\n ${underline.grey('@'+board)}\t`));
       let choiceSet = items.filter(item => item.boards.includes(board))
           .map( (item) => this._buildChoice(item) );
       choices.push(...choiceSet);

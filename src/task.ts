@@ -13,7 +13,7 @@ export default class Task extends Item {
     this._isTask = true;
     this._isComplete = options._isComplete || false;
     this._inProgress = options._inProgress || false;
-    this._priority = options._priority || 1;
+    this._priority = options._priority || options.priority || 2;
   }
 
   get isTask(): boolean { return this._isTask; }

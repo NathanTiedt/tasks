@@ -36,16 +36,9 @@ class Tasks {
     return max + 1;
   }
 
-  private _normalizeTask(input): Task {
-    input._boards = input.boards;
-    if (input._boards.length === 0) input._boards = ['general']
-    input._description = input.description;
-    input._displayId = this._generateId();
-    return new Task(input);
-  }
-
   createTask(input) {
-    const task = this._normalizeTask(input);
+    input.displayId = this._generateId();
+    const task = new Task(input);
     const tasks = this._tasks;
     tasks.push(task);
     this._storage.save(tasks);
@@ -58,7 +51,11 @@ class Tasks {
   }
 
   async completeTasks(ids: Array<string>): Promise<any> {
-    const tasks = this._tasks;
+    let tasks = this._tasks;
+    tasks = tasks.map(task => {
+      task.isComplete = false;
+      return task;
+    });
     ids.forEach( (id) => {
       const index = tasks.findIndex(task => task.id == id);
       if (index != -1) tasks[index].complete();
