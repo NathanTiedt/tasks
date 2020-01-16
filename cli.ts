@@ -28,7 +28,8 @@ async function run(cmd, options) {
       await Tasks.checkCompletenessByBoard();
       break;
     default:
-      await Tasks.checkCompletenessByBoard();
+      if (options.task) run('create', options);
+      else await Tasks.checkCompletenessByBoard();
   };
 };
 

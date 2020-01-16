@@ -57,6 +57,7 @@ class Render {
       name: name,
       message: message,
       choices: this._buildChoiceSet(items),
+      pageSize: 10,
       prefix: '**',
       suffix: '? ',
     };
